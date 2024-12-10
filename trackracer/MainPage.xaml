@@ -16,28 +16,35 @@
                 Aspect="AspectFit"
                 SemanticProperties.Description="dot net bot in a race car number eight" />
 
+            
+            
             <Label
-                Text="Live Location"
+                Text="Fatching your Live Location .. please wait for sometime"
                HorizontalOptions="Center"
                 FontSize=" 15"
                 />
 
-            <Label
+            <!--<Label
                 Text="Welcome to &#10;.NET Multi-platform App UI"
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />-->
 
-            <Button
+            <!--<Button
                 x:Name="listenButton"
                 Text="{Binding ListeningButtonText}" 
                Command="{Binding ChangeListeningModeCommand}"
-                HorizontalOptions="Fill" />
+                HorizontalOptions="Fill" />-->
 
 
 
+            <!--<Label
+                Text="Live Location"
+               HorizontalOptions="Center"
+                FontSize=" 15"
+                />-->
 
- 
+
             <!--<Grid ColumnSpacing ="10" RowSpacing=" 10" >
                 <Grid.RowDefinitions>
                     <RowDefinition/>
