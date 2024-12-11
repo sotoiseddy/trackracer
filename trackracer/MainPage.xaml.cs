@@ -18,8 +18,34 @@ namespace trackracer
             // BindingContext = new MainPageViewModel(new LocationSyncService());
             Start();
 
-            
+
         }
+
+        private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
+        {
+            var deviceLocation = new DeviceLocation(e.Location.Latitude, e.Location.Longitude);
+            // WeakReferenceMessenger.Default.Send(deviceLocation);
+
+            latitude = e.Location.Latitude;
+            longitude = e.Location.Longitude;
+            // _isListening = true;
+
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Location =", $"{latitude}, {longitude}", "OK");
+            });
+        }
+        private async void Onshowlocation(object sender, EventArgs e)
+        {
+           
+            MainThread.BeginInvokeOnMainThread(async () =>
+            {
+                await DisplayAlert("Location =", $"{latitude}, {longitude}", "OK");
+            });
+
+        }
+
+        
 
         public async Task Start()
         {
@@ -33,20 +59,7 @@ namespace trackracer
 
         }
 
-        private void Geolocation_LocationChanged(object? sender, GeolocationLocationChangedEventArgs e)
-        {
-            var deviceLocation = new DeviceLocation(e.Location.Latitude, e.Location.Longitude);
-           // WeakReferenceMessenger.Default.Send(deviceLocation);
-
-            latitude = e.Location.Latitude;
-            longitude = e.Location.Longitude;
-            // _isListening = true;
-
-            MainThread.BeginInvokeOnMainThread(async () =>
-            {
-                await DisplayAlert("Location =", $"{latitude}, {longitude}", "OK");
-            });
-        }
+      
     }
 
 }
