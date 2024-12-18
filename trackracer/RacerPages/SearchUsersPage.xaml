@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="trackracer.RacerPages.SearchUsersPage"
+             Title="Search Users">
+
+    <VerticalStackLayout Padding="20">
+
+        <!-- Search Bar -->
+        <SearchBar x:Name="UserSearchBar"
+                   Placeholder="Search for users"
+                   TextChanged="OnSearchTextChanged" />
+
+        <!-- Results List -->
+        <CollectionView x:Name="SearchResultsCollectionView">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding FullName}" FontSize="20"/>
+                        <Label Text="{Binding UserName}" FontSize="14" TextColor="Gray"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </VerticalStackLayout>
+</ContentPage>

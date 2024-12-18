@@ -46,13 +46,13 @@ public partial class Login : ContentPage
             await DisplayAlert("Success", "Login successful!", "OK");
             if (acctype == 1)
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
+                await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
 
             }
             else if (acctype == 2)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
+                await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
             }
             else
             {
