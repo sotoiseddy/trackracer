@@ -1,4 +1,6 @@
-﻿namespace trackracer
+﻿using trackracer.RacerPages;
+
+namespace trackracer
 {
     public partial class App : Application
     {
@@ -6,7 +8,7 @@
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new Registrationn();
         }
     }
 }

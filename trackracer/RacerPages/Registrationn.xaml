@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="trackracer.RacerPages.Registrationn"
+             Title="Registrationn">
+    <VerticalStackLayout>
+    
+            <ScrollView>
+                <StackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+                    <Label Text="Sign Up" FontSize="24" HorizontalOptions="Center" />
+
+                    <Entry x:Name="UsernameEntry" Placeholder="Username" />
+                    <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+                    <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
+
+                    <Button x:Name="signupbtn" Text="Sign Up" Clicked="OnSignUpClicked" BackgroundColor="#4CAF50" TextColor="White" />
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Have a account??Login?" TextColor="Aqua">
+                                    <Span.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnClick"/>
+
+
+                                    </Span.GestureRecognizers>
+                                </Span>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </StackLayout>
+            </ScrollView>
+     
+    </VerticalStackLayout>
+</ContentPage>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="trackracer.RacerPages.Login"
+             Title="Login">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="20" Spacing="15" VerticalOptions="Center">
+                <Label Text="Login" FontSize="24" HorizontalOptions="Center" />
+
+                <Entry x:Name="UsernameEntry" Placeholder="Username" />
+                <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
+
+                <Button Text="Login" Clicked="OnLoginClicked" BackgroundColor="#4CAF50" TextColor="White" />
+                <!--<Button Text="Sign up" Clicked="OnSignupClicked" BackgroundColor="#2196F3" TextColor="White" />-->
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Don't have a account??SignIn?" TextColor="Aqua">
+                                <Span.GestureRecognizers>
+                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnSignupClicked"/>
+
+
+                                </Span.GestureRecognizers>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
