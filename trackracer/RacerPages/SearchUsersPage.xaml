@@ -13,13 +13,14 @@
         <!-- Search Bar -->
         <SearchBar x:Name="UserSearchBar"
                    Placeholder="Search for users"
+                      Text="{Binding SearchText}" 
                    TextChanged="OnSearchTextChanged" />
 
-        <!--<Picker Title="Select an item"
+        <Picker Title="Select an item"
             ItemsSource="{Binding FilteredItems}" 
-            ItemDisplayBinding="{Binding Name}" />-->
-        <!-- Results List -->
-        <!--<CollectionView x:Name="SearchResultsCollectionView">
+            ItemDisplayBinding="{Binding Name}" />
+        
+        <CollectionView x:Name="SearchResultsCollectionView">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
@@ -28,6 +29,6 @@
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>-->
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
