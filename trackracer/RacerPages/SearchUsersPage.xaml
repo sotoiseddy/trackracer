@@ -15,6 +15,9 @@
                    Placeholder="Search for users"
                    TextChanged="OnSearchTextChanged" />
 
+        <Picker Title="Select an item"
+            ItemsSource="{Binding FilteredItems}" 
+            ItemDisplayBinding="{Binding Name}" />
         <!-- Results List -->
         <CollectionView x:Name="SearchResultsCollectionView">
             <CollectionView.ItemTemplate>

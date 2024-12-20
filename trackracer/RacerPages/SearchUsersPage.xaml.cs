@@ -9,11 +9,13 @@ namespace trackracer.RacerPages;
 
 public partial class SearchUsersPage : ContentPage
 {
-    private SearchViewModel ViewModel => BindingContext as SearchViewModel;
+    private SearchViewModel ViewModel { get; }// => BindingContext as SearchViewModel;
 
     public SearchUsersPage()
     {
-        InitializeComponent();      
+        InitializeComponent();
+        ViewModel = new SearchViewModel();
+        BindingContext = ViewModel;
     }
 
     // Triggered when the search text changes in the SearchBar
@@ -21,42 +23,8 @@ public partial class SearchUsersPage : ContentPage
     {
         ViewModel?.FilterItems(e.NewTextValue);
 
-        //string query = e.NewTextValue;
-
-        //if (!string.IsNullOrEmpty(query))
-        //{
-        //    // Call the backend to search for users
-        //    var results = await SearchUsers(query);
-        //    SearchResultsCollectionView.ItemsSource = results;
-        //}
-        //else
-        //{
-        //    // If no query, clear the results
-        //    SearchResultsCollectionView.ItemsSource = new List<RegistrationModel>();
-        //}
-
-
     }
 
-    // Method to search users from the backend API
-    private async Task<List<RegistrationModel>> SearchUsers(string query)
-    {
-        try
-        {
-            //string url = $"http://localhost:7254/api/users/Search?query={query}";
-            //using var client = new HttpClient();
-            //var response = await client.GetStringAsync(url);
-
-            //// Deserialize the JSON response into a list of UserModel
-            //return JsonConvert.DeserializeObject<List<RegistrationModel>>(response);
-            return new List<RegistrationModel>();
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-            return new List<RegistrationModel>(); // Return an empty list in case of error
-        }
-    }
 }
 
 public class SearchViewModel : INotifyPropertyChanged
@@ -79,7 +47,7 @@ public class SearchViewModel : INotifyPropertyChanged
         get => _filteredItems;
         set
         {
-            _items = value;
+            _filteredItems = value;
             OnPropertyChanged(nameof(FilteredItems));
         }
     }
@@ -99,7 +67,7 @@ public class SearchViewModel : INotifyPropertyChanged
                 client.BaseAddress = new Uri(url);
 
                 // Check if the user exists and is authenticated
-                var result = await client.GetFromJsonAsync<List<RegistrationModel>>($"GetAllStudent");
+                var result = await client.GetFromJsonAsync<List<RegistrationModel>>($"GetAllStudents");
 
                 if (result != null && result.Count > 0)
                 {
@@ -126,11 +94,13 @@ public class SearchViewModel : INotifyPropertyChanged
     {
         if(string.IsNullOrWhiteSpace(searchText))
         {
-            FilteredItems = Items.ToList();
+            //FilteredItems = Items.ToList();
+            FilteredItems = new List<RegistrationModel>(Items);
+
         }
         else
         {
-            FilteredItems = Items.Where (c=>c.UserName.Contains(searchText,StringComparison.OrdinalIgnoreCase)).ToList(); 
+            FilteredItems = Items.Where (c=>c.UserName.ToLower().Contains(searchText.ToLower())).ToList();         
         }
     }
 
