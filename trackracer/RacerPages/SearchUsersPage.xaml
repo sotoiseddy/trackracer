@@ -15,11 +15,11 @@
                    Placeholder="Search for users"
                    TextChanged="OnSearchTextChanged" />
 
-        <Picker Title="Select an item"
+        <!--<Picker Title="Select an item"
             ItemsSource="{Binding FilteredItems}" 
-            ItemDisplayBinding="{Binding Name}" />
+            ItemDisplayBinding="{Binding Name}" />-->
         <!-- Results List -->
-        <CollectionView x:Name="SearchResultsCollectionView">
+        <!--<CollectionView x:Name="SearchResultsCollectionView">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Padding="10">
@@ -28,6 +28,6 @@
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+        </CollectionView>-->
     </VerticalStackLayout>
 </ContentPage>
