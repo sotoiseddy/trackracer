@@ -165,7 +165,7 @@ public class SearchViewModel : INotifyPropertyChanged
         {
             using (var client = new HttpClient())
             {
-                string url = "https://localhost:7254/api/Account/";
+                string url = "http://localhost:5010/api/Account/";
                 client.BaseAddress = new Uri(url);
 
                 var result = await client.GetFromJsonAsync<List<RegistrationModel>>($"GetAllStudents");

@@ -78,7 +78,7 @@ public partial class Login : ContentPage
         {
             using (var client = new HttpClient())
             {
-                string url = "https://localhost:7254/api/Account/";
+                string url = "http://localhost:5010/api/Account/";
                 client.BaseAddress = new Uri(url);
 
                 // Check if the user exists and is authenticated

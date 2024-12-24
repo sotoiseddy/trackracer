@@ -54,7 +54,7 @@ public partial class Registrationn : ContentPage
         using (var client = new HttpClient())// httpClient help to call API
         {
 
-            string url = "https://localhost:7254/api/Account/";
+            string url = "http://localhost:5010/api/Account/";
             client.BaseAddress = new Uri(url);
             var resut = client.PostAsJsonAsync<RegistrationModel>("AddUser", model);
             resut.Wait();
@@ -67,8 +67,9 @@ public partial class Registrationn : ContentPage
                 {
                     await DisplayAlert("Success", "Sign up successful!", "OK");
                     signupbtn.IsEnabled = false;
+                    await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
                 }
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
+                
             }
             else
             {
