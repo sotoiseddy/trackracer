@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -21,103 +22,32 @@ public partial class SearchUsersPage : ContentPage
     // Triggered when the search text changes in the SearchBar
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        ViewModel?.FilterItems(e.NewTextValue);
+        ViewModel?.FilterItems(e.NewTextValue);       
 
+    }  
+
+    private void OnItemSelected(object sender, SelectionChangedEventArgs e)
+    {
+        if (e.CurrentSelection.FirstOrDefault() is RegistrationModel selectedItem)
+        {
+            // Handle the selected item (e.g., navigate or show details)
+            DisplayAlert("Selected", selectedItem.UserName, "OK");
+        }
+    }
+
+    public async void Sendtrackrequest(object sender, EventArgs e)
+    {
+        await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
     }
 
 }
+  
 
-//public class SearchViewModel : INotifyPropertyChanged
-//{
-//    private List<RegistrationModel> _items;
-//    private List<RegistrationModel> _filteredItems;
-
-//    public List<RegistrationModel> Items
-//    {
-//        get => _items;
-//        set
-//        {
-//            _items = value;
-//            OnPropertyChanged(nameof(Items));
-//        }
-//    }
-
-//    public List<RegistrationModel> FilteredItems
-//    {
-//        get => _filteredItems;
-//        set
-//        {
-//            _filteredItems = value;
-//            OnPropertyChanged(nameof(FilteredItems));
-//        }
-//    }
-
-//    public SearchViewModel()
-//    {
-//        LoadItems();
-//    }
-
-//    private async Task<bool> LoadItems()
-//    {
-//        try
-//        {
-//            using (var client = new HttpClient())
-//            {
-//                string url = "https://localhost:7254/api/Account/";
-//                client.BaseAddress = new Uri(url);
-
-//                // Check if the user exists and is authenticated
-//                var result = await client.GetFromJsonAsync<List<RegistrationModel>>($"GetAllStudents");
-
-//                if (result != null && result.Count > 0)
-//                {
-//                    Items = result.ToList();
-//                    FilteredItems = Items;
-//                    return true;
-//                }
-//                else
-//                {
-//                    Items = new List<RegistrationModel>();
-//                    FilteredItems = Items;
-//                    return true;
-//                }
-//            }
-//        }
-//        catch (Exception ex)
-//        {
-//           // await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-//            return false;
-//        }
-//    }
-
-//    public void FilterItems(string searchText)
-//    {
-//        if(string.IsNullOrWhiteSpace(searchText))
-//        {
-//            //FilteredItems = Items.ToList();
-//            FilteredItems = new List<RegistrationModel>(Items);
-
-//        }
-//        else
-//        {
-//            FilteredItems = Items.Where (c=>c.UserName.ToLower().Contains(searchText.ToLower())).ToList();         
-//        }
-//    }
-
-//    protected void OnPropertyChanged(string propertyName)
-//    {
-//        PropertyChanged?.Invoke(this,new PropertyChangedEventArgs(propertyName));
-//    }
-
-//    public event PropertyChangedEventHandler? PropertyChanged;
-
-
-//}
 
 public class SearchViewModel : INotifyPropertyChanged
 {
     private List<RegistrationModel> _items;
-    private List<RegistrationModel> _filteredItems;
+    private ObservableCollection<RegistrationModel> _filteredItems;
     private string _searchText;
 
     public List<RegistrationModel> Items
@@ -130,7 +60,7 @@ public class SearchViewModel : INotifyPropertyChanged
         }
     }
 
-    public List<RegistrationModel> FilteredItems
+    public ObservableCollection<RegistrationModel> FilteredItems
     {
         get => _filteredItems;
         set
@@ -173,13 +103,13 @@ public class SearchViewModel : INotifyPropertyChanged
                 if (result != null && result.Count > 0)
                 {
                     Items = result.ToList();
-                    FilteredItems = Items;
+                    FilteredItems = new ObservableCollection<RegistrationModel>(Items);
                     return true;
                 }
                 else
                 {
                     Items = new List<RegistrationModel>();
-                    FilteredItems = Items;
+                    FilteredItems = new ObservableCollection<RegistrationModel>(Items); 
                     return true;
                 }
             }
@@ -194,13 +124,15 @@ public class SearchViewModel : INotifyPropertyChanged
     {
         if (string.IsNullOrWhiteSpace(searchText))
         {
-            FilteredItems = new List<RegistrationModel>(Items); // Show all items if search is empty
+            FilteredItems = new ObservableCollection<RegistrationModel>(Items); // Show all items if search is empty
         }
         else
         {
-            FilteredItems = Items
-                .Where(c => c.UserName.ToLower().Contains(searchText.ToLower()))
+            var filtered = _items
+                .Where(item => item.UserName.Contains(searchText, StringComparison.OrdinalIgnoreCase))
                 .ToList();
+
+            FilteredItems = new ObservableCollection<RegistrationModel>(filtered);
         }
     }
 
@@ -210,6 +142,7 @@ public class SearchViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
+   
 }
 
 

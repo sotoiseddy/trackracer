@@ -13,15 +13,8 @@ public partial class Login : ContentPage
 		InitializeComponent();
 	}
 
-    private async void OnClick(object sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new MainPage());
-    }
-    private async void OnLogin1Clicked()
-    {
-        await Navigation.PushAsync(new MainPage());
-    }
-    //a
+   
+    
     private async void OnLoginClicked(object sender, EventArgs e)
     {
         string username = UsernameEntry.Text;
