@@ -8,7 +8,7 @@ namespace trackracer
         {
             InitializeComponent();
 
-            MainPage = new Registrationn();
+            MainPage = new Login();
         }
     }
 }
