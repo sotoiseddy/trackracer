@@ -11,37 +11,88 @@ namespace trackracer.RacerPages;
 public partial class SearchUsersPage : ContentPage
 {
     private SearchViewModel ViewModel { get; }// => BindingContext as SearchViewModel;
-
+    Guid? senderID = new Guid();
+    Guid? receiverID = new Guid();
     public SearchUsersPage()
     {
         InitializeComponent();
         ViewModel = new SearchViewModel();
         BindingContext = ViewModel;
+
+        senderID = Guid.Parse(Preferences.Get("userID", "default_value"));
     }
 
     // Triggered when the search text changes in the SearchBar
     private async void OnSearchTextChanged(object sender, TextChangedEventArgs e)
     {
-        ViewModel?.FilterItems(e.NewTextValue);       
+        ViewModel?.FilterItems(e.NewTextValue);
 
-    }  
+    }
 
     private void OnItemSelected(object sender, SelectionChangedEventArgs e)
     {
         if (e.CurrentSelection.FirstOrDefault() is RegistrationModel selectedItem)
         {
             // Handle the selected item (e.g., navigate or show details)
-            DisplayAlert("Selected", selectedItem.UserName, "OK");
+            receiverID = selectedItem.UserID;
+            DisplayAlert("Selected", selectedItem.UserName + "-" + receiverID, "OK");
         }
     }
 
     public async void Sendtrackrequest(object sender, EventArgs e)
     {
-        await Application.Current.MainPage.Navigation.PushModalAsync(new MainPage());
+
+        try
+        {
+
+            // Create the tracking request object
+            var trackingRequest = new TrackingRequestStatusModel
+            {
+                SenderID = senderID,
+                ReceiverID = receiverID,
+                Status = "Pending" // Approved
+            };
+
+
+            using (var client = new HttpClient())
+            {
+                string baseUrl = "http://localhost:5010/api/TrackingRequestStatus"; // API endpoint for tracking requests
+                client.BaseAddress = new Uri(baseUrl);
+                var resut = client.PostAsJsonAsync<TrackingRequestStatusModel>("SaveRequest", trackingRequest);
+
+                resut.Wait();
+                var newResult = resut.Result;
+                if (newResult != null && newResult.IsSuccessStatusCode)
+                {
+                    var readtask = newResult.Content.ReadAsStringAsync().Result;
+                    var finalyResult = JsonConvert.DeserializeObject<bool>(readtask);
+                    if (finalyResult)
+                    {
+                        await DisplayAlert("Success", "send tracking request successful!", "OK");
+                    }
+
+                }
+                else
+                {
+
+                    await DisplayAlert("Error", $"Failed to send tracking request", "OK");
+                }
+            }
+
+        }
+        catch (Exception ex)
+        {
+            // Display exception details for debugging
+            await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
+        }
     }
 
 }
-  
+
+
+
+
+
 
 
 public class SearchViewModel : INotifyPropertyChanged
@@ -109,7 +160,7 @@ public class SearchViewModel : INotifyPropertyChanged
                 else
                 {
                     Items = new List<RegistrationModel>();
-                    FilteredItems = new ObservableCollection<RegistrationModel>(Items); 
+                    FilteredItems = new ObservableCollection<RegistrationModel>(Items);
                     return true;
                 }
             }
@@ -142,7 +193,7 @@ public class SearchViewModel : INotifyPropertyChanged
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
-   
+
 }
 
 

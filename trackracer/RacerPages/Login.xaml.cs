@@ -86,6 +86,7 @@ public partial class Login : ContentPage
                     // Store user details locally
                     Preferences.Set("username", username);
                     Preferences.Set("userID", registrationModel.UserID.ToString());
+
                     return true;
                 }
                 else
