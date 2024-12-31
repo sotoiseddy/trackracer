@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.Design;
 using System.Net.Http;
 using System.Net.Http.Json;
 using trackracer.Models;
@@ -44,10 +45,17 @@ public partial class SearchUsersPage : ContentPage
 
         try
         {
+            if (senderID == receiverID)
+            {
+                await DisplayAlert("Fail", "You can't track yourself", "OK");
+                return;
+
+            }
 
             // Create the tracking request object
             var trackingRequest = new TrackingRequestStatusModel
             {
+               // ID = 01,
                 SenderID = senderID,
                 ReceiverID = receiverID,
                 Status = "Pending" // Approved
@@ -56,7 +64,7 @@ public partial class SearchUsersPage : ContentPage
 
             using (var client = new HttpClient())
             {
-                string baseUrl = "http://localhost:5010/api/TrackingRequestStatus"; // API endpoint for tracking requests
+                string baseUrl = "http://localhost:5010/api/TrackingRequestStatus/"; // API endpoint for tracking requests
                 client.BaseAddress = new Uri(baseUrl);
                 var resut = client.PostAsJsonAsync<TrackingRequestStatusModel>("SaveRequest", trackingRequest);
 
