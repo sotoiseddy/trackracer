@@ -8,12 +8,13 @@ namespace trackracer.RacerPages;
 
 public partial class Dashboard : ContentPage
 {
-    Guid? receiverId;
+    Guid? receiverId = new Guid();
 
     public Dashboard()
 	{
 		InitializeComponent();
-	}
+        receiverId = Guid.Parse(Preferences.Get("userID", "default_value"));
+    }
 
 	private async void OnClicked(object sender, EventArgs e)
 	{
@@ -24,7 +25,6 @@ public partial class Dashboard : ContentPage
 	public async Task<bool> CallRequests(string TrackingRequest )
 	{
 
-
         try
         {
             using (var client = new HttpClient())
@@ -32,11 +32,11 @@ public partial class Dashboard : ContentPage
                 string url = "http://localhost:5010/api/TrackingRequestStatus/";
                 client.BaseAddress = new Uri(url);
 
-                var result = await client.GetFromJsonAsync<bool>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
+                var result = await client.GetFromJsonAsync<TrackingRequestStatusModel>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
              
               
 
-                if (result)
+                if (result != null)
                 {                  
 
                     return true;
