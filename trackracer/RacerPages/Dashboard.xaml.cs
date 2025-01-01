@@ -22,7 +22,7 @@ public partial class Dashboard : ContentPage
 
     }
 
-	public async Task<bool> CallRequests(string TrackingRequest )
+	public async Task CallRequests()
 	{
 
         try
@@ -39,19 +39,19 @@ public partial class Dashboard : ContentPage
                 if (result != null)
                 {                  
 
-                    return true;
+                   
                 }
                 else
                 {
                     await DisplayAlert("Error", "Login FAILED", "OK");
-                    return false;
+                   
                 }
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-            return false;
+           
         }
 
 
