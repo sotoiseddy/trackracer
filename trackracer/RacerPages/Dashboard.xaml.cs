@@ -8,7 +8,9 @@ namespace trackracer.RacerPages;
 
 public partial class Dashboard : ContentPage
 {
-	public Dashboard()
+    Guid? receiverId;
+
+    public Dashboard()
 	{
 		InitializeComponent();
 	}
@@ -27,23 +29,15 @@ public partial class Dashboard : ContentPage
         {
             using (var client = new HttpClient())
             {
-                string url = "http://localhost:5010/api/TrackingRequestStatus/GetTrackingRequestByReceiverID";
+                string url = "http://localhost:5010/api/TrackingRequestStatus/";
                 client.BaseAddress = new Uri(url);
 
-                // Check if the user exists and is authenticated
-                var result = await client.GetFromJsonAsync<bool>(TrackingRequest);
+                var result = await client.GetFromJsonAsync<bool>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
+             
               
 
                 if (result)
-                {
-                    // Retrieve user details
-                     await client.GetFromJsonAsync<TrackingRequestStatusModel>(TrackingRequest);
-                 
-
-                    // Store user details locally
-                    Preferences.Set("Request", TrackingRequest);
-                    
-
+                {                  
 
                     return true;
                 }
