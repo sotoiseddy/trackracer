@@ -14,6 +14,8 @@ public partial class SearchUsersPage : ContentPage
     private SearchViewModel ViewModel { get; }// => BindingContext as SearchViewModel;
     Guid? senderID = new Guid();
     Guid? receiverID = new Guid();
+    string? userName = "";
+    string? receiverName = "";
     public SearchUsersPage()
     {
         InitializeComponent();
@@ -21,6 +23,7 @@ public partial class SearchUsersPage : ContentPage
         BindingContext = ViewModel;
 
         senderID = Guid.Parse(Preferences.Get("userID", "default_value"));
+        userName = Preferences.Get("username", "default_value");
     }
 
     // Triggered when the search text changes in the SearchBar
@@ -36,6 +39,7 @@ public partial class SearchUsersPage : ContentPage
         {
             // Handle the selected item (e.g., navigate or show details)
             receiverID = selectedItem.UserID;
+            receiverName = selectedItem.UserName;
             DisplayAlert("Selected", selectedItem.UserName + "-" + receiverID, "OK");
         }
     }
@@ -55,9 +59,11 @@ public partial class SearchUsersPage : ContentPage
             // Create the tracking request object
             var trackingRequest = new TrackingRequestStatusModel
             {
-               // ID = 01,
+                // ID = 01,
                 SenderID = senderID,
                 ReceiverID = receiverID,
+                SenderName = userName,
+                ReceiverName = receiverName,
                 Status = "Pending" // Approved
             };
 
