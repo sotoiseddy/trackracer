@@ -11,19 +11,20 @@ public partial class Dashboard : ContentPage
     Guid? receiverId = new Guid();
 
     public Dashboard()
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         receiverId = Guid.Parse(Preferences.Get("userID", "default_value"));
+        CallRequests();
     }
 
-	private async void OnClicked(object sender, EventArgs e)
-	{
+    private async void OnClicked(object sender, EventArgs e)
+    {
         await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
 
     }
 
-	public async Task CallRequests()
-	{
+    public async Task CallRequests()
+    {
 
         try
         {
@@ -32,26 +33,34 @@ public partial class Dashboard : ContentPage
                 string url = "http://localhost:5010/api/TrackingRequestStatus/";
                 client.BaseAddress = new Uri(url);
 
-                var result = await client.GetFromJsonAsync<TrackingRequestStatusModel>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
-             
-              
+                var result = client.GetFromJsonAsync<TrackingRequestStatusModel>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
 
-                if (result != null)
-                {                  
+                result.Wait();
+                var newResult = result.Result;
 
-                   
+                if (newResult != null)
+                {
+                    if (newResult.ID == 0)
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+
                 }
                 else
                 {
                     await DisplayAlert("Error", "Login FAILED", "OK");
-                   
+
                 }
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-           
+
         }
 
 
