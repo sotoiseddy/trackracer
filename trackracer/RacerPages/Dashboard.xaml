@@ -3,10 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="trackracer.RacerPages.Dashboard"
              Title="Dashboard">
-    <VerticalStackLayout>
+    <StackLayout>
         
         <Label Text="If you want to Send Tracking requests"></Label>
         <Button Text="Send Track Requests" Clicked="OnClicked" BackgroundColor="#4CAF50" TextColor="White" />
 
-    </VerticalStackLayout>
+        
+        <Label Text="If you want to wait to receive Requests Wait at this page"></Label>
+        <Label Text="SenderName -" x:Name="NameReceiverID"></Label>
+        <Label Text="SenderID -" x:Name="lblReceiverID"> </Label>
+        <Label Text="SenderID -" x:Name="llblReceiverID"></Label>
+        <Button Text="Allow" x:Name="OnAllowClickeda" Clicked="OnAllowClicked" BackgroundColor="#4CAF50" TextColor="White" />
+        <Button Text="Deny" Clicked="OnDenyClicked" x:Name="OnDenyClickeda" BackgroundColor="#4CAF50" TextColor="White" />
+
+    </StackLayout>
+
+
+
+
+
+
+ 
 </ContentPage>

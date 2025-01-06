@@ -22,7 +22,7 @@ public partial class Dashboard : ContentPage
         await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
 
     }
-
+  
     public async Task CallRequests()
     {
 
@@ -42,11 +42,24 @@ public partial class Dashboard : ContentPage
                 {
                     if (newResult.ID == 0)
                     {
+                        NameReceiverID.IsVisible = false;
+                        lblReceiverID.IsVisible = false;
+                        llblReceiverID.IsVisible = false;
+                        OnDenyClickeda.IsVisible = false;
+                        OnAllowClickeda.IsVisible = false;
 
                     }
                     else
                     {
+                        NameReceiverID.Text = "Sender-   " + newResult.SenderName;
+                        lblReceiverID.Text = "Sender ID-   " + newResult.SenderID;
+                        llblReceiverID.Text = "Status-   " + newResult.Status;
 
+                        NameReceiverID.IsVisible = true;
+                        lblReceiverID.IsVisible = true;
+                        OnDenyClickeda.IsVisible = true;
+                        OnAllowClickeda.IsVisible = true;
+                        llblReceiverID.IsVisible = true;
                     }
 
                 }
@@ -64,6 +77,15 @@ public partial class Dashboard : ContentPage
         }
 
 
+
+    }
+
+    private async void OnAllowClicked(object sender, EventArgs e)
+    {
+        
+    }
+    private async void OnDenyClicked(object sender, EventArgs e)
+    {
 
     }
 }

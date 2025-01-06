@@ -6,6 +6,7 @@ using System.ComponentModel.Design;
 using System.Net.Http;
 using System.Net.Http.Json;
 using trackracer.Models;
+using static trackracer.Models.StatusDetails;
 
 namespace trackracer.RacerPages;
 
@@ -64,7 +65,7 @@ public partial class SearchUsersPage : ContentPage
                 ReceiverID = receiverID,
                 SenderName = userName,
                 ReceiverName = receiverName,
-                Status = "Pending" // Approved
+                Status = TrackingStatus.Pending.ToString()
             };
 
 
