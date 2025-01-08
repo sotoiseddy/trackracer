@@ -38,49 +38,53 @@ public partial class Dashboard : ContentPage
                 string url = "http://localhost:5010/api/TrackingRequestStatus/";
                 client.BaseAddress = new Uri(url);
 
-                var result = client.GetFromJsonAsync<TrackingRequestStatusModel>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
+                var result = client.GetFromJsonAsync<List<TrackingRequestStatusModel>>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
 
                 result.Wait();
                 var newResult = result.Result;
 
                 if (newResult != null)
                 {
-                    if (newResult.ID == 0)
-                    {
+                    //if (newResult.ID == 0)
+                    //{
                         
 
-                    }
-                    else
+                    //}
+                    //else
                     {
-                        var rootLayout = (StackLayout)this.Content;
-                        var senderNameLabel = new Label
+                        foreach (var item in newResult)
                         {
-                            Text = $"Sender: {newResult.SenderName}",
-                            FontSize = 16,
-                            FontAttributes = FontAttributes.Bold
-                        };
-
-                        // Create a label for Sender ID
-                        var senderIdLabel = new Label
-                        {
-                            Text = $"Sender ID: {newResult.SenderID}",
-                            FontSize = 14
-                        };
-
-                        // Create a label for Status
-                        var statusLabel = new Label
-                        {
-                            Text = $"Status: {newResult.Status}",
-                            FontSize = 14,
-                            FontAttributes = FontAttributes.Italic
-                        };
-
-                        // Add these labels to the layout dynamically
-                        rootLayout.Children.Add(senderNameLabel);
-                        rootLayout.Children.Add(senderIdLabel);
-                        rootLayout.Children.Add(statusLabel);
 
 
+                            var rootLayout = (StackLayout)this.Content;
+                            var senderNameLabel = new Label
+                            {
+                                Text = $"Sender: {item.SenderName}",
+                                FontSize = 16,
+                                FontAttributes = FontAttributes.Bold
+                            };
+
+                            // Create a label for Sender ID
+                            var senderIdLabel = new Label
+                            {
+                                Text = $"Sender ID: {item.SenderID}",
+                                FontSize = 14
+                            };
+
+                            // Create a label for Status
+                            var statusLabel = new Label
+                            {
+                                Text = $"Status: {item.Status}",
+                                FontSize = 14,
+                                FontAttributes = FontAttributes.Italic
+                            };
+
+                            // Add these labels to the layout dynamically
+                            rootLayout.Children.Add(senderNameLabel);
+                            rootLayout.Children.Add(senderIdLabel);
+                            rootLayout.Children.Add(statusLabel);
+
+                        }
 
 
 
