@@ -85,7 +85,8 @@ public partial class Dashboard : ContentPage
                             };
                             acceptButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Green, Colors.DarkGreen); // Theme-aware color
                             acceptButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
-                            acceptButton.Clicked += OnAllowClicked;
+                            //acceptButton.Clicked += OnAllowClicked;
+                            acceptButton.Clicked += (sender, e) => OnAllowClicked(sender, item.ID);
 
                             // Create Deny button
                             var denyButton = new Button
@@ -95,8 +96,8 @@ public partial class Dashboard : ContentPage
                             };
                             denyButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Red, Colors.DarkRed);
                             denyButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
-                            denyButton.Clicked += OnDenyClicked;
-                          
+                            // denyButton.Clicked += OnDenyClicked;
+                            denyButton.Clicked += (sender, e) => OnDenyClicked(sender, item.ID);
 
                             // Add these labels to the layout dynamically
                             rootLayout.Children.Add(senderNameLabel);
@@ -129,16 +130,16 @@ public partial class Dashboard : ContentPage
 
     }
 
-    private async void OnAllowClicked(object sender, EventArgs e)
+    private async void OnAllowClicked(object sender,int id)
     {
-       
+
         var trackingRequest = new TrackingRequestStatusModel
         {
-            // ID = 01,
-            SenderID = senderID,
-            ReceiverID = receiverID,
-            SenderName = userName,
-            ReceiverName = receiverName,
+            ID = id,
+            SenderID = new Guid(),
+            ReceiverID = new Guid(),
+            SenderName = "",
+            ReceiverName = "",
             Status = TrackingStatus.Approved.ToString()
         };
 
@@ -169,16 +170,16 @@ public partial class Dashboard : ContentPage
         }
 
     }
-    private async void OnDenyClicked(object sender, EventArgs e)
+    private async void OnDenyClicked(object sender,int id)
     {
-      
+
         var trackingRequest = new TrackingRequestStatusModel
         {
-            // ID = 01,
-            SenderID = senderID,
-            ReceiverID = receiverID,
-            SenderName = userName,
-            ReceiverName = receiverName,
+            ID = id,
+            SenderID = new Guid(),
+            ReceiverID = new Guid(),
+            SenderName = "",
+            ReceiverName = "",
             Status = TrackingStatus.Rejected.ToString()
         };
 
