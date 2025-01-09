@@ -78,11 +78,32 @@ public partial class Dashboard : ContentPage
                                 FontSize = 14,
                                 FontAttributes = FontAttributes.Italic
                             };
+                            var acceptButton = new Button
+                            {
+                                Text = "Accept",
+                                
+                            };
+                            acceptButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Green, Colors.DarkGreen); // Theme-aware color
+                            acceptButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
+                            acceptButton.Clicked += OnAllowClicked;
+
+                            // Create Deny button
+                            var denyButton = new Button
+                            {
+                                Text = "Deny",
+                               
+                            };
+                            denyButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Red, Colors.DarkRed);
+                            denyButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
+                            denyButton.Clicked += OnDenyClicked;
+                          
 
                             // Add these labels to the layout dynamically
                             rootLayout.Children.Add(senderNameLabel);
                             rootLayout.Children.Add(senderIdLabel);
                             rootLayout.Children.Add(statusLabel);
+                            rootLayout.Children.Add(acceptButton);
+                            rootLayout.Children.Add(denyButton);
 
                         }
 
@@ -150,7 +171,7 @@ public partial class Dashboard : ContentPage
     }
     private async void OnDenyClicked(object sender, EventArgs e)
     {
-        return;
+      
         var trackingRequest = new TrackingRequestStatusModel
         {
             // ID = 01,
