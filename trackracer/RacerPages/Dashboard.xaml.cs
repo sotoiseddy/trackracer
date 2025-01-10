@@ -27,10 +27,9 @@ public partial class Dashboard : ContentPage
         await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
 
     }
-  
+
     public async Task CallRequests()
     {
-
         try
         {
             using (var client = new HttpClient())
@@ -38,25 +37,16 @@ public partial class Dashboard : ContentPage
                 string url = "http://localhost:5010/api/TrackingRequestStatus/";
                 client.BaseAddress = new Uri(url);
 
-                var result = client.GetFromJsonAsync<List<TrackingRequestStatusModel>>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
+                var result = await client.GetFromJsonAsync<List<TrackingRequestStatusModel>>($"GetTrackingRequestByReceiverID?receiverId={receiverId}");
 
-                result.Wait();
-                var newResult = result.Result;
-
-                if (newResult != null)
+                if (result != null)
                 {
-                    //if (newResult.ID == 0)
-                    //{
-                        
-
-                    //}
-                    //else
+                    // Loop through the requests and render only those with a status that is not "Rejected"
+                    foreach (var item in result)
                     {
-                        foreach (var item in newResult)
+                        if (item.Status != TrackingStatus.Rejected.ToString())
                         {
-
-
-                            var rootLayout = (StackLayout)this.Content;
+                            // Sender name label
                             var senderNameLabel = new Label
                             {
                                 Text = $"Sender: {item.SenderName}",
@@ -64,71 +54,64 @@ public partial class Dashboard : ContentPage
                                 FontAttributes = FontAttributes.Bold
                             };
 
-                            // Create a label for Sender ID
+                            // Sender ID label
                             var senderIdLabel = new Label
                             {
                                 Text = $"Sender ID: {item.SenderID}",
                                 FontSize = 14
                             };
 
-                            // Create a label for Status
+                            // Status label
                             var statusLabel = new Label
                             {
                                 Text = $"Status: {item.Status}",
                                 FontSize = 14,
                                 FontAttributes = FontAttributes.Italic
                             };
+
+                            // Accept button
                             var acceptButton = new Button
                             {
-                                Text = "Accept",
-                                
+                                Text = "Accept"
                             };
                             acceptButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Green, Colors.DarkGreen); // Theme-aware color
                             acceptButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
-                            //acceptButton.Clicked += OnAllowClicked;
                             acceptButton.Clicked += (sender, e) => OnAllowClicked(sender, item.ID);
 
-                            // Create Deny button
+                            // Deny button
                             var denyButton = new Button
                             {
-                                Text = "Deny",
-                               
+                                Text = "Deny"
                             };
                             denyButton.SetAppThemeColor(Button.BackgroundColorProperty, Colors.Red, Colors.DarkRed);
                             denyButton.SetAppThemeColor(Button.TextColorProperty, Colors.White, Colors.LightGray);
-                            // denyButton.Clicked += OnDenyClicked;
                             denyButton.Clicked += (sender, e) => OnDenyClicked(sender, item.ID);
 
-                            // Add these labels to the layout dynamically
+                            // Add elements to the layout
+                            var rootLayout = (StackLayout)this.Content;
                             rootLayout.Children.Add(senderNameLabel);
                             rootLayout.Children.Add(senderIdLabel);
                             rootLayout.Children.Add(statusLabel);
                             rootLayout.Children.Add(acceptButton);
                             rootLayout.Children.Add(denyButton);
-
                         }
-
-
-
                     }
-
                 }
                 else
                 {
-                    await DisplayAlert("Error", "Login FAILED", "OK");
-
+                    await DisplayAlert("Error", "No requests found.", "OK");
                 }
             }
         }
         catch (Exception ex)
         {
             await DisplayAlert("Error", $"An error occurred: {ex.Message}", "OK");
-
         }
-
-
-
     }
+
+
+
+
 
     private async void OnAllowClicked(object sender,int id)
     {
@@ -158,7 +141,7 @@ public partial class Dashboard : ContentPage
                 var finalyResult = JsonConvert.DeserializeObject<bool>(readtask);
                 if (finalyResult)
                 {
-                    await DisplayAlert("Success", "send tracking request successful!", "OK");
+                    await DisplayAlert("Success", "Accepted request successful!", "OK");
                 }
 
             }
@@ -198,7 +181,7 @@ public partial class Dashboard : ContentPage
                 var finalyResult = JsonConvert.DeserializeObject<bool>(readtask);
                 if (finalyResult)
                 {
-                    await DisplayAlert("Success", "send tracking request successful!", "OK");
+                    await DisplayAlert("Success", "Denied request successful!", "OK");
                 }
 
             }
@@ -209,4 +192,58 @@ public partial class Dashboard : ContentPage
             }
         }
     }
+
+    private void RenderRequests(List<TrackingRequestStatusModel> requests)
+    {
+        var rootLayout = (StackLayout)this.Content;
+        rootLayout.Children.Clear(); // Clear previous UI elements
+
+        foreach (var item in requests)
+        {
+            // Sender name label
+            var senderNameLabel = new Label
+            {
+                Text = $"Sender: {item.SenderName}",
+                FontSize = 16,
+                FontAttributes = FontAttributes.Bold
+            };
+
+            // Sender ID label
+            var senderIdLabel = new Label
+            {
+                Text = $"Sender ID: {item.SenderID}",
+                FontSize = 14
+            };
+
+            // Status label
+            var statusLabel = new Label
+            {
+                Text = $"Status: {item.Status}",
+                FontSize = 14,
+                FontAttributes = FontAttributes.Italic
+            };
+
+            // Accept button
+            var acceptButton = new Button
+            {
+                Text = "Accept"
+            };
+            acceptButton.Clicked += (sender, e) => OnAllowClicked(sender, item.ID);
+
+            // Deny button
+            var denyButton = new Button
+            {
+                Text = "Deny"
+            };
+            denyButton.Clicked += (sender, e) => OnDenyClicked(sender, item.ID);
+
+            // Add elements to the layout
+            rootLayout.Children.Add(senderNameLabel);
+            rootLayout.Children.Add(senderIdLabel);
+            rootLayout.Children.Add(statusLabel);
+            rootLayout.Children.Add(acceptButton);
+            rootLayout.Children.Add(denyButton);
+        }
+    }
+
 }
