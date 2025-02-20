@@ -4,40 +4,21 @@
              x:Class="trackracer.RacerPages.SearchUsersPage"          
              Title="Search Users">
 
-    <!--<ContentPage.BindingContext>
-        <local:.SearchViewModel />
-    </ContentPage.BindingContext>-->
     
     <VerticalStackLayout Padding="20">
 
-        <!-- Search Bar -->
+       
         <!--<SearchBar x:Name="UserSearchBar"
-                   Placeholder="Search for users"
-                      Text="{Binding SearchText}" 
-                   TextChanged="OnSearchTextChanged" />
-
-        <Picker Title="Select an item"
-            ItemsSource="{Binding FilteredItems}" 
-            ItemDisplayBinding="{Binding Name}" />
-        
-        <CollectionView x:Name="SearchResultsCollectionView">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <StackLayout Padding="10">
-                        <Label Text="{Binding FullName}" FontSize="20"/>
-                        <Label Text="{Binding UserName}" FontSize="14" TextColor="Gray"/>
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>-->
-
-        <SearchBar x:Name="UserSearchBar"
                Placeholder="Search for users"
                TextChanged="OnSearchTextChanged"
-               HorizontalOptions="FillAndExpand" />
-
-        <!-- Results List -->
-        <CollectionView ItemsSource="{Binding FilteredItems}" 
+               HorizontalOptions="FillAndExpand" />-->
+        <Entry x:Name="RequestText" Placeholder="Request Text" />
+        <Entry x:Name="LocationText" Placeholder="Location" />
+        <Picker x:Name="TypePicker"
+         Title="Select Type"
+         ItemsSource="{Binding RequestTypes}"
+         SelectedIndexChanged="OnTypeSelected"/>
+        <!--<CollectionView ItemsSource="{Binding FilteredItems}" 
                     SelectionMode="Single"
                     SelectionChanged="OnItemSelected">
             <CollectionView.ItemTemplate>
@@ -47,7 +28,7 @@
                     </Grid>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
-        </CollectionView>
+        </CollectionView>-->
         <Button Text="Send Track Request" Clicked="Sendtrackrequest" BackgroundColor="#4CAF50" TextColor="White" />
     </VerticalStackLayout>
 </ContentPage>

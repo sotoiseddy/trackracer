@@ -12,8 +12,12 @@
                     <Entry x:Name="UsernameEntry" Placeholder="Username" />
                     <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
                     <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
-
-                    <Button x:Name="signupbtn" Text="Sign Up" Clicked="OnSignUpClicked" BackgroundColor="#4CAF50" TextColor="White" />
+                <Picker x:Name="TypePicker"
+                        Title="Select Type"
+                        ItemsSource="{Binding UserTypes}"
+                        SelectedIndexChanged="OnTypeSelected"/>
+                    
+                <Button x:Name="signupbtn" Text="Sign Up" Clicked="OnSignUpClicked" BackgroundColor="#4CAF50" TextColor="White" />
                     <Label>
                         <Label.FormattedText>
                             <FormattedString>

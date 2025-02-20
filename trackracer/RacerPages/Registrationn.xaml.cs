@@ -6,10 +6,35 @@ namespace trackracer.RacerPages;
 
 public partial class Registrationn : ContentPage
 {
-	public Registrationn()
+    private Dictionary<string, int> userTypes = new Dictionary<string, int>
+    {
+        { "Customer", 1 },
+        { "Electrician", 2 },
+        { "Carpenter", 3 },
+        { "Painter", 4 },
+        { "Gardener", 5 },
+        { "Locksmith", 6 },
+          { "Plumber", 7 }
+
+    };
+    private int selectedType = 0; // Default value
+    public Registrationn()
 	{
 		InitializeComponent();
-	}
+        foreach (var type in userTypes.Keys)
+        {
+            TypePicker.Items.Add(type);
+        }
+    }
+
+    private void OnTypeSelected(object sender, EventArgs e)
+    {
+        if (TypePicker.SelectedIndex != -1)
+        {
+            string selectedKey = TypePicker.SelectedItem.ToString();
+            selectedType = userTypes[selectedKey]; // Get corresponding numeric value
+        }
+    }
     private async void OnClick(object sender, EventArgs e)
     {
         await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
@@ -42,6 +67,11 @@ public partial class Registrationn : ContentPage
             await DisplayAlert("Error", "Passwords do not match.", "OK");
             return;
         }
+        if (selectedType == 0)
+        {
+            await DisplayAlert("Error", "Please select a user type.", "OK");
+            return;
+        }
 
 
 
@@ -49,7 +79,7 @@ public partial class Registrationn : ContentPage
         model.UserID = Guid.NewGuid();
         model.UserName = username;
         model.Password = password;
-
+        model.Type = selectedType;
 
         using (var client = new HttpClient())// httpClient help to call API
         {
@@ -63,13 +93,17 @@ public partial class Registrationn : ContentPage
             {
                 var readtask = newResult.Content.ReadAsStringAsync().Result;
                 var finalyResult = JsonConvert.DeserializeObject<bool>(readtask);
-                if (finalyResult)
+                if (finalyResult==true)
                 {
                     await DisplayAlert("Success", "Sign up successful!", "OK");
                     signupbtn.IsEnabled = false;
                     await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
                 }
-                
+                else if (finalyResult == false) 
+                {
+                await DisplayAlert("Success", "Sign up FAILED, try changing username!", "OK");
+
+                }
             }
             else
             {

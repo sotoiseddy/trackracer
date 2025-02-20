@@ -39,14 +39,39 @@ public partial class Login : ContentPage
             await DisplayAlert("Success", "Login successful!", "OK");
             if (acctype == 1)
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
 
-            }
+            }//customer
             else if (acctype == 2)
             {
 
                 await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
-            }
+            }//Electricion
+            else if (acctype == 3)
+            {
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+            }//Carpanter
+            else if (acctype == 4)
+            {
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+            }//Painter
+            else if (acctype == 5)
+            {
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+            }//Gardener
+            else if (acctype == 6)
+            {
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+            }//Locksmith
+            else if (acctype == 7)
+            {
+
+                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+            }//Plumber
             else
             {
                 await DisplayAlert("Error", "Invalid Account Type!!!.", "OK");
@@ -86,6 +111,7 @@ public partial class Login : ContentPage
                     // Store user details locally
                     Preferences.Set("username", username);
                     Preferences.Set("userID", registrationModel.UserID.ToString());
+                    Preferences.Set("UserType", acctype);
 
                     return true;
                 }

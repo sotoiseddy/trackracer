@@ -12,11 +12,31 @@ namespace trackracer.RacerPages;
 
 public partial class SearchUsersPage : ContentPage
 {
+    private Dictionary<string, int> RequestTypes = new Dictionary<string, int>
+    {
+      
+        { "Electrician", 2 },
+        { "Carpenter", 3 },
+        { "Painter", 4 },
+        { "Gardener", 5 },
+        { "Locksmith", 6 },
+          { "Plumber", 7 }
+
+    };
+    int selectedType = 0;
+    private void OnTypeSelected(object sender, EventArgs e)
+    {
+        if (TypePicker.SelectedIndex != -1)
+        {
+            string selectedKey = TypePicker.SelectedItem.ToString();
+            selectedType = RequestTypes[selectedKey]; // Get corresponding numeric value
+        }
+    }
     private SearchViewModel ViewModel { get; }// => BindingContext as SearchViewModel;
     Guid? senderID = new Guid();
-    Guid? receiverID = new Guid();
+   // Guid? receiverID = new Guid();
     string? userName = "";
-    string? receiverName = "";
+ 
     public SearchUsersPage()
     {
         InitializeComponent();
@@ -25,6 +45,11 @@ public partial class SearchUsersPage : ContentPage
 
         senderID = Guid.Parse(Preferences.Get("userID", "default_value"));
         userName = Preferences.Get("username", "default_value");
+
+        foreach (var type in RequestTypes.Keys)
+        {
+            TypePicker.Items.Add(type);
+        }
     }
 
     // Triggered when the search text changes in the SearchBar
@@ -39,33 +64,51 @@ public partial class SearchUsersPage : ContentPage
         if (e.CurrentSelection.FirstOrDefault() is RegistrationModel selectedItem)
         {
             // Handle the selected item (e.g., navigate or show details)
-            receiverID = selectedItem.UserID;
-            receiverName = selectedItem.UserName;
-            DisplayAlert("Selected", selectedItem.UserName + "-" + receiverID, "OK");
+            //receiverID = selectedItem.UserID;
+            //receiverName = selectedItem.UserName;
+           // DisplayAlert("Selected", selectedItem.UserName + "-" + receiverID, "OK");
         }
     }
 
     public async void Sendtrackrequest(object sender, EventArgs e)
     {
 
+
+
+
+
         try
         {
-            if (senderID == receiverID)
+            string Requesttext = RequestText.Text;
+            string LocationTtext = LocationText.Text;
+            if (string.IsNullOrEmpty(Requesttext))
             {
-                await DisplayAlert("Fail", "You can't track yourself", "OK");
+                await DisplayAlert("Error", "Please fill in Request Text", "OK");
+                return;
+            }
+            if (string.IsNullOrEmpty(LocationTtext))
+            {
+                await DisplayAlert("Error", "Please fill in Your Location", "OK");
+                return;
+            }
+            if (selectedType == 0)
+            {
+                await DisplayAlert("Error", "Please Select a Type of Request", "OK");
                 return;
 
             }
-
             // Create the tracking request object
             var trackingRequest = new TrackingRequestStatusModel
             {
-                // ID = 01,
+                
                 SenderID = senderID,
-                ReceiverID = receiverID,
+               //ReceiverID = receiverID,
                 SenderName = userName,
-                ReceiverName = receiverName,
-                Status = TrackingStatus.Pending.ToString()
+              //  ReceiverName = receiverName,
+                Status = TrackingStatus.Pending.ToString(),
+                Text = Requesttext ,
+                RequestType = selectedType,
+                Location = LocationTtext
             };
 
 
