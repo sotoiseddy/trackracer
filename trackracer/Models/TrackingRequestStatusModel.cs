@@ -17,5 +17,6 @@ namespace trackracer.Models
         public string Text { get; set; }
         public int RequestType { get; set; }
         public string Location { get; set; }
+        public int Pay { get; set; }
     }
 }

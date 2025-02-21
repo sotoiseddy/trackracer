@@ -2,33 +2,87 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="trackracer.RacerPages.SearchUsersPage"          
-             Title="Search Users">
+             Title="Search Users"
+             BackgroundColor="#ff5733">
 
-    
-    <VerticalStackLayout Padding="20">
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
 
-       
-        <!--<SearchBar x:Name="UserSearchBar"
-               Placeholder="Search for users"
-               TextChanged="OnSearchTextChanged"
-               HorizontalOptions="FillAndExpand" />-->
-        <Entry x:Name="RequestText" Placeholder="Request Text" />
-        <Entry x:Name="LocationText" Placeholder="Location" />
-        <Picker x:Name="TypePicker"
-         Title="Select Type"
-         ItemsSource="{Binding RequestTypes}"
-         SelectedIndexChanged="OnTypeSelected"/>
-        <!--<CollectionView ItemsSource="{Binding FilteredItems}" 
-                    SelectionMode="Single"
-                    SelectionChanged="OnItemSelected">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid Padding="10" BackgroundColor="LightGray" Margin="0,5,0,0">
-                        <Label Text="{Binding UserName}" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>-->
-        <Button Text="Send Track Request" Clicked="Sendtrackrequest" BackgroundColor="#4CAF50" TextColor="White" />
-    </VerticalStackLayout>
+            <!-- Glassmorphism Card -->
+            <Frame BackgroundColor="White" Opacity="0.90"
+                   Padding="20"
+                   HasShadow="True"
+                   CornerRadius="20"
+                   Margin="10">
+
+                <VerticalStackLayout Spacing="15">
+
+                    <!-- Page Title -->
+                    <Label Text="Find a Service Provider" 
+                           FontSize="26" 
+                           FontAttributes="Bold"
+                           HorizontalOptions="Center"
+                           TextColor="#ff5733"/>
+
+                    <!-- Request Text -->
+                    <Frame BackgroundColor="#F7F7F7" CornerRadius="15" Padding="10" Margin="5">
+                        <Entry x:Name="RequestText"
+                               Placeholder="Describe your request"
+                               PlaceholderColor="#999"
+                               TextColor="#333"
+                               BackgroundColor="Transparent"
+                               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Location -->
+                    <Frame BackgroundColor="#F7F7F7" CornerRadius="15" Padding="10" Margin="5">
+                        <Entry x:Name="LocationText"
+                               Placeholder="Enter location"
+                               PlaceholderColor="#999"
+                               TextColor="#333"
+                               BackgroundColor="Transparent"
+                               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Pay -->
+                    <Frame BackgroundColor="#F7F7F7" CornerRadius="15" Padding="10" Margin="5">
+                        <Entry x:Name="Pay"
+                               Placeholder="Enter pay amount"
+                               Keyboard="Numeric"
+                               PlaceholderColor="#999"
+                               TextColor="#333"
+                               BackgroundColor="Transparent"
+                               FontSize="16"/>
+                    </Frame>
+
+                    <!-- Type Picker -->
+                    <Frame BackgroundColor="#F7F7F7" CornerRadius="15" Padding="10" Margin="5">
+                        <Picker x:Name="TypePicker"
+                                Title="Select Type"
+                                ItemsSource="{Binding RequestTypes}"
+                                SelectedIndexChanged="OnTypeSelected"
+                                TitleColor="#999"
+                                TextColor="#333"
+                                BackgroundColor="Transparent"
+                                FontSize="16"/>
+                    </Frame>
+
+                    <!-- Send Request Button -->
+                    <Button Text="Send Track Request"
+                            Clicked="Sendtrackrequest"
+                            BackgroundColor="#4CAF50"
+                            TextColor="White"
+                            FontSize="18"
+                            FontAttributes="Bold"
+                            Margin="10"
+                            HeightRequest="55"
+                            Padding="12"/>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

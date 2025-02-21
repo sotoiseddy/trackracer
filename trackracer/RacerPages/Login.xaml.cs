@@ -39,38 +39,38 @@ public partial class Login : ContentPage
             await DisplayAlert("Success", "Login successful!", "OK");
             if (acctype == 1)
             {
-                await Application.Current.MainPage.Navigation.PushModalAsync(new SearchUsersPage());
+                await Navigation.PushAsync(new CustomerDashboard());
 
             }//customer
             else if (acctype == 2)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Electricion
             else if (acctype == 3)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Carpanter
             else if (acctype == 4)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Painter
             else if (acctype == 5)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Gardener
             else if (acctype == 6)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Locksmith
             else if (acctype == 7)
             {
 
-                await Application.Current.MainPage.Navigation.PushModalAsync(new Dashboard());
+                await Navigation.PushAsync(new Dashboard());
             }//Plumber
             else
             {
@@ -84,7 +84,7 @@ public partial class Login : ContentPage
     }
     private async void OnSignupClicked(object sender, EventArgs e)
     {
-        await Application.Current.MainPage.Navigation.PushModalAsync(new Registrationn());
+        await Navigation.PushAsync(new Registrationn());
     }
 
 

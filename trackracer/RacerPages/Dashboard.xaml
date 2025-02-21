@@ -2,22 +2,18 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="trackracer.RacerPages.Dashboard"
-             Title="Dashboard">
-    <StackLayout>
-        
-        
-       
+             Title="Dashboard"
+             BackgroundColor="#ff5733">
 
-        
-        <Label FontSize="22" Text ="Suitable Requests for you :"></Label>
-      
+    <StackLayout Padding="20" Spacing="15">
+
+        <!-- Title Label -->
+        <Label Text="Suitable Requests for You:"
+               FontSize="26"
+               FontAttributes="Bold"
+               TextColor="White"
+              />
 
     </StackLayout>
 
-
-
-
-
-
- 
 </ContentPage>

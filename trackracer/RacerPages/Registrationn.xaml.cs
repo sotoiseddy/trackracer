@@ -8,13 +8,13 @@ public partial class Registrationn : ContentPage
 {
     private Dictionary<string, int> userTypes = new Dictionary<string, int>
     {
-        { "Customer", 1 },
-        { "Electrician", 2 },
-        { "Carpenter", 3 },
-        { "Painter", 4 },
-        { "Gardener", 5 },
-        { "Locksmith", 6 },
-          { "Plumber", 7 }
+       { "Student", 1 },
+{ "Math_Teacher", 2 },
+{ "Science_Teacher", 3 },
+{ "English_Teacher", 4 },
+{ "History_Teacher", 5 },
+{ "Geography_Teacher", 6 },
+{ "Computer_Science_Teacher", 7 },
 
     };
     private int selectedType = 0; // Default value
@@ -37,7 +37,7 @@ public partial class Registrationn : ContentPage
     }
     private async void OnClick(object sender, EventArgs e)
     {
-        await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
+        await Navigation.PushAsync(new Login());
 
     }
     private async void OnSignUpClicked(object sender, EventArgs e)
@@ -97,7 +97,7 @@ public partial class Registrationn : ContentPage
                 {
                     await DisplayAlert("Success", "Sign up successful!", "OK");
                     signupbtn.IsEnabled = false;
-                    await Application.Current.MainPage.Navigation.PushModalAsync(new Login());
+                    await Navigation.PushAsync(new Login());
                 }
                 else if (finalyResult == false) 
                 {

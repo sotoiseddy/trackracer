@@ -2,37 +2,73 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="trackracer.RacerPages.Registrationn"
-             Title="Registrationn">
-    <VerticalStackLayout>
-    
-            <ScrollView>
-                <StackLayout Padding="20" Spacing="15" VerticalOptions="Center">
-                    <Label Text="Sign Up" FontSize="24" HorizontalOptions="Center" />
+               BackgroundColor="#ff5733"
+             Title="Register">
 
-                    <Entry x:Name="UsernameEntry" Placeholder="Username" />
-                    <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" />
-                    <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" />
-                <Picker x:Name="TypePicker"
-                        Title="Select Type"
-                        ItemsSource="{Binding UserTypes}"
-                        SelectedIndexChanged="OnTypeSelected"/>
-                    
-                <Button x:Name="signupbtn" Text="Sign Up" Clicked="OnSignUpClicked" BackgroundColor="#4CAF50" TextColor="White" />
-                    <Label>
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
+
+            <!-- Glassmorphism Card -->
+            <Frame BackgroundColor="White" Opacity="0.85"
+                   Padding="25"
+                   HasShadow="True"
+                   CornerRadius="20">
+
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Sign Up" 
+                           FontSize="30" 
+                           FontAttributes="Bold" 
+                           HorizontalOptions="Center" 
+                           TextColor="#ff5733" />
+
+                    <Entry x:Name="UsernameEntry" Placeholder="Username"
+                           BackgroundColor="#ffffff" TextColor="#333" 
+                           HeightRequest="45"/>
+
+                    <Entry x:Name="PasswordEntry" Placeholder="Password"
+                           IsPassword="True" BackgroundColor="#ffffff" TextColor="#333"
+                           HeightRequest="45"/>
+
+                    <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password"
+                           IsPassword="True" BackgroundColor="#ffffff" TextColor="#333"
+                           HeightRequest="45"/>
+
+                    <Picker x:Name="TypePicker"
+                            Title="Select Type"
+                            ItemsSource="{Binding UserTypes}"
+                            SelectedIndexChanged="OnTypeSelected"
+                            BackgroundColor="#ffffff"
+                            TextColor="#333"
+                            HeightRequest="45"/>
+
+                    <Button x:Name="signupbtn" 
+                            Text="Create Account" 
+                            Clicked="OnSignUpClicked"
+                            BackgroundColor="#ff5733"
+                            TextColor="White"
+                            HeightRequest="50"
+                            FontAttributes="Bold"
+                            />
+
+                    <!-- Login Link -->
+                    <Label HorizontalOptions="Center">
                         <Label.FormattedText>
                             <FormattedString>
-                                <Span Text="Have a account??Login?" TextColor="Aqua">
+                                <Span Text="Already have an account? " TextColor="Black"/>
+                                <Span Text="Login" TextColor="#33ffbd" FontAttributes="Bold">
                                     <Span.GestureRecognizers>
                                         <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnClick"/>
-
-
                                     </Span.GestureRecognizers>
                                 </Span>
                             </FormattedString>
                         </Label.FormattedText>
                     </Label>
-                </StackLayout>
-            </ScrollView>
-     
-    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
 </ContentPage>

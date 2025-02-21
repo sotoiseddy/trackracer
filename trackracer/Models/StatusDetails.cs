@@ -12,7 +12,8 @@ namespace trackracer.Models
         {
             Pending = 1,
             Approved,
-            Rejected
+            Rejected,
+            Canceled
         }
     }
 }

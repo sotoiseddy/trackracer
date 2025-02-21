@@ -14,13 +14,14 @@ public partial class SearchUsersPage : ContentPage
 {
     private Dictionary<string, int> RequestTypes = new Dictionary<string, int>
     {
-      
-        { "Electrician", 2 },
-        { "Carpenter", 3 },
-        { "Painter", 4 },
-        { "Gardener", 5 },
-        { "Locksmith", 6 },
-          { "Plumber", 7 }
+
+     
+{ "Math_Teacher", 2 },
+{ "Science_Teacher", 3 },
+{ "English_Teacher", 4 },
+{ "History_Teacher", 5 },
+{ "Geography_Teacher", 6 },
+{ "Computer_Science_Teacher", 7 },
 
     };
     int selectedType = 0;
@@ -79,8 +80,10 @@ public partial class SearchUsersPage : ContentPage
 
         try
         {
+            
             string Requesttext = RequestText.Text;
             string LocationTtext = LocationText.Text;
+            int pay = int.TryParse(Pay.Text, out int parsedPay) ? parsedPay : 0;
             if (string.IsNullOrEmpty(Requesttext))
             {
                 await DisplayAlert("Error", "Please fill in Request Text", "OK");
@@ -91,24 +94,27 @@ public partial class SearchUsersPage : ContentPage
                 await DisplayAlert("Error", "Please fill in Your Location", "OK");
                 return;
             }
+            if (pay == 0)
+            {
+                await DisplayAlert("Error", "Please fill in Your Pay range", "OK");
+                return;
+            }
             if (selectedType == 0)
             {
                 await DisplayAlert("Error", "Please Select a Type of Request", "OK");
                 return;
 
             }
-            // Create the tracking request object
             var trackingRequest = new TrackingRequestStatusModel
             {
                 
                 SenderID = senderID,
-               //ReceiverID = receiverID,
                 SenderName = userName,
-              //  ReceiverName = receiverName,
                 Status = TrackingStatus.Pending.ToString(),
                 Text = Requesttext ,
                 RequestType = selectedType,
-                Location = LocationTtext
+                Location = LocationTtext,
+                Pay = pay
             };
 
 
