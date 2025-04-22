@@ -23,8 +23,11 @@ public partial class Dashboard : ContentPage
         
     }
 
-   
 
+    public async void OnchatClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new ChatHub());
+    }
     public async Task CallRequests()
     {
 

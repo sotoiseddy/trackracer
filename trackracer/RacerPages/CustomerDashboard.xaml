@@ -12,6 +12,11 @@
                 BackgroundColor="#4CAF50"
                 TextColor="White"
                 FontAttributes="Bold" />
+        <Button Text="Send More Requests"
+         Clicked="OnchatClicked"
+         BackgroundColor="#4CAF50"
+         TextColor="White"
+         FontAttributes="Bold" />
 
         <Label Text="Requests Given By You"
                FontSize="24"
